@@ -1,13 +1,11 @@
 # Multitenant JPA Library
 
 ## Introduction
-
 A multitenant architecture allows a single software instance to be used by two different clients, so internally and transparently to the user, the data must be divided for each of them.
 
 This library has been created with this idea in mind, which will speed up the process of implementing this architecture when we use JPA in our microservices. And that almost automatically, with a simple configuration, we will have a multitenant microservice, which will access one DB or another depending on the tenant that arrives with each request.
 
 ## Usage
-
 This library is used for multitenant with JPA, the JPA spring data part did not change compared to a normal project, it is only important that the DBs (of each tenant) have exactly the same structure.
 
 To use the library we must include within our `pom.xml`:
@@ -21,7 +19,6 @@ To use the library we must include within our `pom.xml`:
 ```
 
 ## Setup
-
 Once the library is added, we must add the following configuration in the `application.yml`:
 
 ```yaml
