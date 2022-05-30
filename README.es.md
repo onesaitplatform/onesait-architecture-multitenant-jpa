@@ -1,13 +1,11 @@
 # Librería Multitenant JPA
 
 ## Introducción
-
 Una arquitectura multitenant nos permite que una única instancia de software sea usada por dos clientes distintos, por lo que de manera interna y de forma transparente al usuario se deberán tener divididos los datos para cada uno de ellos.
 
 Con esta idea se ha creado esta librería, que nos acelerará el proceso de implementar esta arquitectura cuando hacemos uso de JPA en nuestros microservicios. Y que de manera casi automática, con una simple configuración, tendremos un microservicio multitenant, que accederá a una BD o a otra según el tenant que llegue con cada petición.
 
 ## Uso
-
 Esta librería se utiliza para multitenant con JPA, la parte de spring data JPA no cambio frente a un proyecto normal, tan solo es importante que las DBs (de cada tenant) tengan exactamente la misma estructura.
 
 Para usar la librería hay que incluirla dentro de nuestro `pom.xml`:
@@ -21,7 +19,6 @@ Para usar la librería hay que incluirla dentro de nuestro `pom.xml`:
 ```
 
 ## Configuración
-
 Una vez añadida la librería deberemos añadir la siguiente configuración en el `application.yml`:
 
 ```yaml
