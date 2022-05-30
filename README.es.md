@@ -1,16 +1,16 @@
-# Multitenant JPA Library
+# Librería Multitenant JPA
 
-## Introduction
+## Introducción
 
-A multitenant architecture allows a single software instance to be used by two different clients, so internally and transparently to the user, the data must be divided for each of them.
+Una arquitectura multitenant nos permite que una única instancia de software sea usada por dos clientes distintos, por lo que de manera interna y de forma transparente al usuario se deberán tener divididos los datos para cada uno de ellos.
 
-This library has been created with this idea in mind, which will speed up the process of implementing this architecture when we use JPA in our microservices. And that almost automatically, with a simple configuration, we will have a multitenant microservice, which will access one DB or another depending on the tenant that arrives with each request.
+Con esta idea se ha creado esta librería, que nos acelerará el proceso de implementar esta arquitectura cuando hacemos uso de JPA en nuestros microservicios. Y que de manera casi automática, con una simple configuración, tendremos un microservicio multitenant, que accederá a una BD o a otra según el tenant que llegue con cada petición.
 
-## Usage
+## Uso
 
-This library is used for multitenant with JPA, the JPA spring data part did not change compared to a normal project, it is only important that the DBs (of each tenant) have exactly the same structure.
+Esta librería se utiliza para multitenant con JPA, la parte de spring data JPA no cambio frente a un proyecto normal, tan solo es importante que las DBs (de cada tenant) tengan exactamente la misma estructura.
 
-To use the library we must include within our `pom.xml`:
+Para usar la librería hay que incluirla dentro de nuestro `pom.xml`:
 
 ```xml
 <dependency>
@@ -20,9 +20,9 @@ To use the library we must include within our `pom.xml`:
 </dependency>
 ```
 
-## Setup
+## Configuración
 
-Once the library is added, we must add the following configuration in the `application.yml`:
+Una vez añadida la librería deberemos añadir la siguiente configuración en el `application.yml`:
 
 ```yaml
 architecture.multitenant-jpa:
@@ -51,19 +51,19 @@ architecture.multitenant-jpa:
         driverClassName: <DB_DRIVER_CLASS_N>
 ```
 
-* **<TENANT_PROVIDER>**:(*Optional) Indicates where the tenant of the request should obtain the library from, it has two options: TOKEN (it comes in a field of the JWT token) or HEADER (it comes in a header). By default the value is TOKEN.
-* **<TENANT_FIELD>**:(*Optional) Indicates the name of the field where the tenant comes from, both in the jwt and in the header. By default, the value is tenant for the token or X-TENANT-ID in case it comes in the header.
-* **<TENANT_ID_N>**: Identifier of each of the tenants used.
-* **<DB_URL_N>**: Url of the DB for each one of the tenants. Example: jdbc:mysql://localhost:3306/uni_dev_A
-* **<DB_USER_N>**: Database user for each of the tenants.
-* **<DB_PASSWORD_N>**: User password for each of the tenants.
-* **<DB_DRIVER_CLASS_N>**: DB Drive for each of the tenants: Example: com.mysql.cj.jdbc.Driver.
+* **<TENANT_PROVIDER>**:(*Opcional) Indica de donde debe obtener la librería el tenant de la petición, tiene dos opciones: TOKEN(viene en un campo del token JWT) o HEADER(viene en un header). Por defecto el valor es TOKEN.
+* **<TENANT_FIELD>**:(*Opcional) Indica el nombre del campo donde viene el tenant, tanto en el jwt como en la cabecera. Por defecto el valor es tenant para el token o X-TENANT-ID para el caso de que venga en el header.
+* **<TENANT_ID_N>**: Identificador de cada uno de los tenants que se utilizarán.
+* **<DB_URL_N>**: Url de la BD para cada uno de los tenants. Ej: jdbc:mysql://localhost:3306/uni_dev_A
+* **<DB_USER_N>**: Usuario de la BD para cada uno de los tenants.
+* **<DB_PASSWORD_N>**: Contraseña del usuario para cada uno de los tenants.
+* **<DB_DRIVER_CLASS_N>**: Drive de la BD para cada uno de los tenants: Ej: com.mysql.cj.jdbc.Driver.
 
 ## Logs
-Having a multitenant microservice, it is possible that you also want to have multitenant logs, for this the library automatically saves in an MDC context variable the value of the tenantId that arrives in the request (token or header), to be able to be used from the logback through an appender of type `"ch.qos.logback.classic.sift.SiftingAppender"` , below we can see three basic examples, one for file logs, another in the console and one to send to fluentd:
+Al tener un microservicio multitenant, es posible que también se quiera tener logs multitenant, para ello la librería de manera automática guardando en una variable de contexto MDC el valor del tenantId que llega en la petición(token o header), para poder ser usado desde el logback mediante un appender de tipo `"ch.qos.logback.classic.sift.SiftingAppender"` , a continuación podemos ver tres ejemplos básicos, uno para logs en fichero, otro en consola y uno para enviar a fluentd:
 
-### File
-Using this appender, a log file will be generated for each tenant in the folder indicated in the LOG_PATH property of the logback.
+### Fichero
+Con este appender se nos generará un fichero de log por cada tenant en la carpeta indicada en la propiedad LOG_PATH del logback.
 
 **logback-spring.xml**
 ```xml
@@ -93,8 +93,8 @@ Using this appender, a log file will be generated for each tenant in the folder 
 </appender>
 ```
 
-### Terminal
-Using this appender we will print the logs by console, adding the tenant of each of the logs with the following format: `<TIME_STAMP> <LEVEL> [<TENANT_ID>] [<APP_NAME>,...] [<THREAD>]`
+### Consola
+Con este appender nos imprimirá los logs por consola, añadiendo el tenant de cada uno de los logs con el siguiente formato: `<TIME_STAMP> <LEVEL> [<TENANT_ID>] [<APP_NAME>,...] [<THREAD>]`
 
 **logback-spring.xml**
 ```xml
@@ -115,7 +115,7 @@ Using this appender we will print the logs by console, adding the tenant of each
 ```
 
 ### Fluentd
-Finally we have an appender that modifies the tag with which the log is sent to fluentd, adding the tenant to the application name: `<APP_NAME>-<TENANT_ID>`
+Por último tenemos un appender que modifica la tag con la que se envía el log a fluentd, añadiendo el tenant al nombre de aplicacion: `<APP_NAME>-<TENANT_ID>`
 
 **logback-spring.xml**
 ```xml
@@ -138,7 +138,7 @@ Finally we have an appender that modifies the tag with which the log is sent to 
 </appender>
 ```
 
-Finally, as always, add the desired appenders to each profile in which you do want to use:
+Por ultimo, como siempre se deben añadir los appender deseados a cada profile en el que si quiera usar:
 
 **logback-spring.xml**
 ```xml
